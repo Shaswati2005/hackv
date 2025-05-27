@@ -5,6 +5,9 @@ import Link from 'next/link';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState('Home');
+
+  const menuItems = ['Home', 'Support', 'Contact'];
 
   return (
     <nav className="bg-white border-b border-gray-200 px-4 md:px-8 lg:px-16 py-4 shadow-sm relative">
@@ -17,9 +20,20 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8 text-sm font-medium">
-          <Link href="#" className="text-indigo-600 border-b-2 border-indigo-500 pb-1">Home</Link>
-          <Link href="#" className="text-gray-600 hover:text-indigo-600">Support</Link>
-          <Link href="#" className="text-gray-600 hover:text-indigo-600">Contact</Link>
+          {menuItems.map((item) => (
+            <Link
+              key={item}
+              href="#"
+              onClick={() => setActiveItem(item)}
+              className={`pb-1 ${
+                activeItem === item
+                  ? 'text-indigo-600 border-b-2 border-indigo-500'
+                  : 'text-gray-600 hover:text-indigo-600'
+              }`}
+            >
+              {item}
+            </Link>
+          ))}
         </div>
 
         {/* Mobile Toggle */}
@@ -37,9 +51,23 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden mt-4 space-y-4 text-sm font-medium">
-          <Link href="#" className="block text-indigo-600">Home</Link>
-          <Link href="#" className="block text-gray-600 hover:text-indigo-600">Support</Link>
-          <Link href="#" className="block text-gray-600 hover:text-indigo-600">Contact</Link>
+          {menuItems.map((item) => (
+            <Link
+              key={item}
+              href="#"
+              onClick={() => {
+                setActiveItem(item);
+                setIsOpen(false);
+              }}
+              className={`block ${
+                activeItem === item
+                  ? 'text-indigo-600 font-semibold'
+                  : 'text-gray-600 hover:text-indigo-600'
+              }`}
+            >
+              {item}
+            </Link>
+          ))}
         </div>
       )}
     </nav>
