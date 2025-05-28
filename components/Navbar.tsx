@@ -1,22 +1,28 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState('Home');
+  const [activeItem, setActiveItem] = useState("Home");
 
-  const menuItems = ['Home', 'Support', 'Contact'];
+  const menuItems = ["Home", "Support", "Contact"];
 
   return (
     <nav className="bg-white border-b border-gray-200 px-4 md:px-8 lg:px-16 py-4 shadow-sm relative">
       <div className="flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center space-x-2">
-          <div className="h-6 w-6 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full" />
-          <span className="text-xl font-semibold text-black">LegalFlow</span>
-        </div>
+        <Link href="/" className="flex items-center space-x-2">
+          <Image
+            src="/logo.svg"
+            alt="Logo"
+            width={200}
+            height={200}
+            className="rounded-full"
+          />
+        </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8 text-sm font-medium">
@@ -25,12 +31,25 @@ const Navbar = () => {
               key={item}
               href="#"
               onClick={() => setActiveItem(item)}
-              className={`pb-1 ${
-                activeItem === item
-                  ? 'text-indigo-600 border-b-2 border-indigo-500'
-                  : 'text-gray-600 hover:text-indigo-600'
-              }`}
+              className={`
+                relative pb-1 
+                ${
+                  activeItem === item
+                    ? "text-indigo-600 border-b-2 border-indigo-500"
+                    : "text-gray-600"
+                }
+                hover:text-indigo-600
+                transition-colors duration-300
+              `}
             >
+              {/* Animated underline */}
+              <span
+                className={`
+                  absolute bottom-0 left-0 h-0.5 bg-indigo-600
+                  transition-all duration-300
+                  ${activeItem === item ? "w-full" : "w-0 group-hover:w-full"}
+                `}
+              />
               {item}
             </Link>
           ))}
@@ -59,12 +78,26 @@ const Navbar = () => {
                 setActiveItem(item);
                 setIsOpen(false);
               }}
-              className={`block ${
-                activeItem === item
-                  ? 'text-indigo-600 font-semibold'
-                  : 'text-gray-600 hover:text-indigo-600'
-              }`}
+              className={`
+                block
+                relative
+                ${
+                  activeItem === item
+                    ? "text-indigo-600 font-semibold"
+                    : "text-gray-600"
+                }
+                hover:text-indigo-600
+                transition-colors duration-300
+              `}
             >
+              {/* Animated underline for mobile as well */}
+              <span
+                className={`
+                  absolute bottom-0 left-0 h-0.5 bg-indigo-600
+                  transition-all duration-300
+                  ${activeItem === item ? "w-full" : "w-0 group-hover:w-full"}
+                `}
+              />
               {item}
             </Link>
           ))}

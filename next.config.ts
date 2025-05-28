@@ -2,9 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  experimental: {
-    serverComponentsExternalPackages: ['pdf2json'],
+  images: {
+    remotePatterns: [new URL('https://placehold.co/**')],
   },
+  
 };
 
 export default nextConfig;
