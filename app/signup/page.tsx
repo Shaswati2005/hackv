@@ -9,7 +9,7 @@ const SignupPage = () => {
         {/* Image Section - only on md+ */}
         <div className="hidden md:block md:w-1/2">
           <img
-            src="https://placehold.co/500x300" // Replace with actual image in /public
+            src="/signupbg.jpg" // Replace with actual image in /public
             alt="Legal workflow"
             className="h-full w-full object-cover"
           />
@@ -120,7 +120,7 @@ const SignupPage = () => {
 
               <p className="text-center text-sm text-gray-500 mt-4">
                 Already have an account?{" "}
-                <a href="#" className="text-indigo-600 hover:underline">
+                <a href="/login" className="text-indigo-600 hover:underline">
                   Login
                 </a>
               </p>

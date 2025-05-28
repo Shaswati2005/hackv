@@ -5,13 +5,13 @@ const features = [
   {
     title: "Document Analysis",
     desc: "Quickly understand documents with AI-powered insights.",
-    img: "https://placehold.co/400x250",
+    img: "/docanalysis.svg",
     buttons: [{ text: "Try Now", href: "#" }],
   },
   {
     title: "Clause Explanations",
     desc: "Get simplified explanations of complex legal clauses.",
-    img: "https://placehold.co/400x250",
+    img: "/clauseexplanation.svg",
     buttons: [
       { text: "Try Now", href: "#" },
       { text: "Learn More", href: "#" },
@@ -20,13 +20,13 @@ const features = [
   {
     title: "Drafting of Documents",
     desc: "Generate accurate legal drafts tailored to your needs.",
-    img: "https://placehold.co/400x250",
+    img: "/drafting.svg",
     buttons: [{ text: "Generate Draft", href: "#" }],
   },
   {
     title: "Loophole Detection",
     desc: "Identify potential weaknesses or missing clauses in contracts.",
-    img: "https://placehold.co/400x250",
+    img: "loophole.svg",
     buttons: [{ text: "Scan Now", href: "#" }],
   },
 ];
@@ -35,28 +35,32 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <header
-        className="bg-cover bg-center h-[70vh] flex items-center justify-center text-white text-center"
-        style={{ backgroundImage: "url('https://placehold.co/1600x800')" }}
-      >
-        <div className="bg-black bg-opacity-50 p-8 rounded-md">
-          <h1 className="text-4xl md:text-5xl font-bold  text-white">
+      <video
+        src={"/bg.webm"}
+        className="w-full h-full fixed top-0 left-0 -z-1 object-cover"
+        autoPlay={true}
+        loop={true}
+        muted={true}
+      ></video>
+      <header className="relative bg-cover bg-center h-[70vh] flex items-center justify-center text-white text-center px-4 md:px-8">
+        <div className="bg-black/50 backdrop-blur-md p-8 md:p-12 rounded-xl shadow-xl max-w-3xl w-full">
+          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white">
             Streamline Legal Workflows
           </h1>
-          <p className="mt-4 text-lg md:text-xl text-[#e0e0e0]">
+          <p className="mt-4 text-base md:text-xl text-gray-200 leading-relaxed">
             Empowering law firms with seamless automation and collaboration
-            tools
+            tools.
           </p>
           <Link
-            href="#"
-            className="inline-block mt-6 px-6 py-3 bg-[#5c5fff] text-white rounded-md hover:bg-[#4d4de0] text-sm font-medium"
+            href="/signup"
+            className="inline-block mt-6 px-6 py-3 bg-[#5c5fff] hover:bg-[#4d4de0] text-white rounded-md text-sm font-medium transition duration-300 ease-in-out shadow-md hover:shadow-lg"
           >
             Get Started
           </Link>
         </div>
       </header>
 
-      <section className="py-16 px-4 md:px-8 lg:px-16 bg-white">
+      <section className="py-16 z-0 px-4 md:px-8 lg:px-16 bg-white">
         <h2 className="text-3xl font-semibold text-center mb-4 text-[#1a1a1a]">
           Features Section
         </h2>
@@ -71,26 +75,29 @@ export default function Home() {
             return (
               <div
                 key={idx}
-                className={`flex flex-col md:flex-row items-center gap-8 ${
+                className={`flex flex-col md:flex-row overflow-hidden items-center gap-8 ${
                   isReversed ? "md:flex-row-reverse" : ""
                 }`}
               >
                 <img
                   src={feature.img}
                   alt={feature.title}
-                  className="w-full md:w-1/2 rounded-md shadow-md"
+                  className="max-w-3/4 max-h-[300px] md:w-1/2 shadow-md transition-all duration-500 ease-in-out hover:-translate-y-1 hover:rotate-1 hover:shadow-[inset_0px_5px_15px_-3px_rgba(0,_0,_0,_0.2)]lg rounded-md"
                 />
                 <div className="flex-1 text-center md:text-left">
                   <h3 className="text-2xl font-semibold text-[#1a1a1a]">
                     {feature.title}
                   </h3>
-                  <p className="text-[#5e5e5e] mt-2 mb-4">{feature.desc}</p>
+                  <p className="text-gray-600 mt-2 mb-4 leading-relaxed">
+                    {feature.desc}
+                  </p>
+
                   <div className="space-x-4">
                     {feature.buttons.map((btn, i) => (
                       <Link
                         key={i}
                         href={btn.href}
-                        className="inline-block px-4 py-2 bg-[#5c5fff] text-white rounded-md hover:bg-[#4d4de0] text-sm font-medium"
+                        className="inline-block px-5 py-2 bg-[#5c5fff] text-white rounded-md hover:bg-[#4d4de0] transition duration-300 text-sm font-medium"
                       >
                         {btn.text}
                       </Link>

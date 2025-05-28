@@ -16,7 +16,7 @@ const LoginPage = () => {
         {/* Left-side Image */}
         <div className="hidden md:block md:w-1/2">
           <img
-            src="https://placehold.co/500x300" // Replace with actual image in /public
+            src="/loginbg.jpg" // Replace with actual image in /public
             alt="LegalFlow login visual"
             className="h-full w-full object-cover"
           />
@@ -108,7 +108,7 @@ const LoginPage = () => {
               {/* Sign Up Redirect */}
               <p className="text-center text-sm text-gray-500 mt-4">
                 Don’t have an account?{" "}
-                <a href="#" className="text-indigo-600 hover:underline">
+                <a href="/signup" className="text-indigo-600 hover:underline">
                   Sign Up
                 </a>
               </p>
