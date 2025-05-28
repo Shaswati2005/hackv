@@ -110,23 +110,29 @@ export default function DashboardPage() {
           {/* Side Panel */}
           <div className="space-y-6">
             {/* Quick Actions */}
-            <div className="bg-white rounded-xl shadow p-4">
-              <h2 className="text-lg font-semibold text-gray-900 mb-3">
+            <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-5">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">
                 Quick Actions
               </h2>
               <ul className="space-y-3 text-sm">
-                <li className="cursor-pointer hover:underline text-gray-800">
-                  📤 Upload New Document
+                <li className="cursor-pointer text-gray-800 hover:text-indigo-600 transition">
+                  📤{" "}
+                  <span className="underline underline-offset-2">
+                    Upload New Document
+                  </span>
                 </li>
-                <li className="cursor-pointer hover:underline text-gray-800">
-                  💡 Get Quick Clause Explanation
+                <li className="cursor-pointer text-gray-800 hover:text-indigo-600 transition">
+                  💡{" "}
+                  <span className="underline underline-offset-2">
+                    Get Quick Clause Explanation
+                  </span>
                 </li>
               </ul>
             </div>
 
             {/* Tips & Announcements */}
-            <div className="bg-white rounded-xl shadow p-4">
-              <h2 className="text-lg font-semibold text-gray-900 mb-3">
+            <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-5">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">
                 Tips & Announcements
               </h2>
               {faqs.map((faq, idx) => (
@@ -141,8 +147,12 @@ export default function DashboardPage() {
         </div>
 
         {/* Footer */}
-        <footer className="text-center text-sm text-gray-500 mt-12">
-          <p>© 2025 LegalEase. All rights reserved.</p>
+        <footer className="text-center text-sm text-gray-500 mt-12 pt-6 border-t border-gray-200">
+          <p>
+            © 2025{" "}
+            <span className="font-semibold text-indigo-600">LegalEase</span>.
+            All rights reserved.
+          </p>
         </footer>
       </main>
     </div>

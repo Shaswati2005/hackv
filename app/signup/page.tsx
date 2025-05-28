@@ -1,16 +1,15 @@
-'use client'; // Only if using App Router
+"use client"; // Only if using App Router
 
-import React from 'react';
+import React from "react";
 
 const SignupPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="flex flex-col md:flex-row w-full max-w-5xl shadow-md border rounded-xl overflow-hidden">
-        
         {/* Image Section - only on md+ */}
         <div className="hidden md:block md:w-1/2">
           <img
-            src="/signup-placeholder.jpg" // Replace with actual image in /public
+            src="https://placehold.co/500x300" // Replace with actual image in /public
             alt="Legal workflow"
             className="h-full w-full object-cover"
           />
@@ -29,7 +28,9 @@ const SignupPage = () => {
             <form className="w-full space-y-4">
               {/* Email */}
               <div>
-                <label className="block text-sm font-medium text-gray-700">Email address</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Email address
+                </label>
                 <input
                   type="email"
                   placeholder="Enter your email"
@@ -39,7 +40,9 @@ const SignupPage = () => {
 
               {/* Phone */}
               <div>
-                <label className="block text-sm font-medium text-gray-700">Phone Number</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Phone Number
+                </label>
                 <input
                   type="tel"
                   placeholder="Enter your phone number"
@@ -49,7 +52,9 @@ const SignupPage = () => {
 
               {/* Password */}
               <div>
-                <label className="block text-sm font-medium text-gray-700">Password</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Password
+                </label>
                 <input
                   type="password"
                   placeholder="Enter password"
@@ -59,7 +64,9 @@ const SignupPage = () => {
 
               {/* Confirm Password */}
               <div>
-                <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Confirm Password
+                </label>
                 <input
                   type="password"
                   placeholder="Confirm password"
@@ -75,7 +82,10 @@ const SignupPage = () => {
                   className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
                 />
                 <label htmlFor="terms" className="ml-2 text-gray-600">
-                  I agree to the <a href="#" className="text-indigo-600 underline">Terms and Conditions</a>
+                  I agree to the{" "}
+                  <a href="#" className="text-indigo-600 underline">
+                    Terms and Conditions
+                  </a>
                 </label>
               </div>
 
@@ -97,7 +107,7 @@ const SignupPage = () => {
               {/* Google Sign Up */}
               <button
                 type="button"
-                onClick={() => window.location.href = "#"}
+                onClick={() => (window.location.href = "#")}
                 className="w-full flex items-center justify-center gap-2 border py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition"
               >
                 <img
@@ -109,7 +119,10 @@ const SignupPage = () => {
               </button>
 
               <p className="text-center text-sm text-gray-500 mt-4">
-                Already have an account? <a href="#" className="text-indigo-600 hover:underline">Login</a>
+                Already have an account?{" "}
+                <a href="#" className="text-indigo-600 hover:underline">
+                  Login
+                </a>
               </p>
             </form>
           </div>
