@@ -60,28 +60,28 @@ export default function DashboardPage() {
             title="Document Analysis"
             description="Analyze legal documents for structure, terms, and risks."
             buttonText="Start Analysis"
-            href="#"
+            href="/explanation"
           />
           <FeatureCard
             icon="📘"
             title="Clause Explanations"
             description="Understand and compare legal clauses instantly."
             buttonText="Explain Clause"
-            href="#"
+            href="/explanation"
           />
           <FeatureCard
             icon="🕳️"
             title="Loophole Detection"
             description="Find weak points to avoid legal risks."
             buttonText="Detect Loopholes"
-            href="#"
+            href="/explanation"
           />
           <FeatureCard
             icon="📝"
             title="Drafting Assistance"
             description="Create or modify documents with AI."
             buttonText="Start Drafting"
-            href="#"
+            href="/drtemp"
           />
         </section>
 

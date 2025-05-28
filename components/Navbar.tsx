@@ -29,7 +29,7 @@ const Navbar = () => {
           {menuItems.map((item) => (
             <Link
               key={item}
-              href="#"
+              href={item === "Home" ? "/" : "/support"}
               onClick={() => setActiveItem(item)}
               className={`
                 relative pb-1 
