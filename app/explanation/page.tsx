@@ -16,7 +16,7 @@ export default function PDFTextAnalyzer() {
   const [text, setText] = useState("");
   const [uploadedPDF, setUploadedPDF] = useState<File | null>(null);
   const [numPages, setNumPages] = useState<number | null>(null);
-  const [showPDF, setShowPDF] = useState(true);
+  const [showPDF, setShowPDF] = useState<Boolean>(true);
 
   const extractTextFromPDF = async (file: File) => {
     const arrayBuffer = await file.arrayBuffer();

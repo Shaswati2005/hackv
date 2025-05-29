@@ -35,7 +35,7 @@ export default function FeatureCard({
       {/* Button */}
       <a
         href={href}
-        className="mt-6 text-center text-sm px-4 py-2 rounded-lg bg-[#6C63FF] text-white font-medium hover:bg-indigo-700 transition-colors duration-200"
+        className="mt-6 text-center text-sm px-4 py-2 rounded-lg bg-[#6C63FF] text-white font-medium  hover:bg-indigo-700 transition-colors duration-200"
       >
         {buttonText}
       </a>

@@ -8,7 +8,6 @@ import {
   Lightbulb,
   BarChart2,
   Info,
-  UserCircle2,
   X,
 } from "lucide-react";
 import { useState, useEffect } from "react";
