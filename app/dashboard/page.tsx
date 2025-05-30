@@ -2,8 +2,8 @@
 
 import Navbar from "../../components/Navbar";
 import FeatureCard from "../../components/FeatureCard";
-import FAQItem from "@/components/FAQItem";
-import { faqs } from "@/data/faqs";
+import FAQItem from "../..//components/FAQItem";
+import { faqs } from "../../data/faqs";
 import { useEffect, useState } from "react";
 import { getCurrentUsername } from "../../lib/supabaseHelpers";
 import { supabase } from "../../lib/supabaseClient"; // ensure this exists

@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { pdf } from "@react-pdf/renderer";
 
 // Dynamically load TemplatePdf (PDF document component)
-const TemplatePdf = dynamic(() => import("@/components/TemplatePdf"), {
+const TemplatePdf = dynamic(() => import("../../../components/TemplatePdf"), {
   ssr: false,
 });
 
