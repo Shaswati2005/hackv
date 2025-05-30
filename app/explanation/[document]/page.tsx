@@ -55,7 +55,7 @@ export default function LegalFlowDashboard() {
   }
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch(`/api/legal-analysis/${document}`);
+      const res = await fetch(`/api/legal-analysis?id=${document}`);
       if (res.ok) {
         const json = await res.json();
         console.log("Fetched analysis:", json);

@@ -1,9 +1,13 @@
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
 
-export async function GET(req: NextRequest, context: { params: { id: string } }) {
-  const id = context.params.id;
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get("id");
+
+  if (!id) {
+    return NextResponse.json({ error: "Missing ID" }, { status: 400 });
+  }
 
   try {
     const analysis = await prisma.legalAnalysis.findUnique({
