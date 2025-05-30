@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getAuthCookie } from "../utils/auth";
-import { userAgent } from "next/server";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
