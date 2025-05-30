@@ -10,11 +10,15 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...compat.extends([
+    "next/core-web-vitals",
+    "next",
+    "plugin:@typescript-eslint/recommended",
+  ]),
   {
     rules: {
       "no-unused-vars": "off",
-      "unused-imports/no-unused-imports": "off", // If using the plugin
+      "unused-imports/no-unused-imports": "off", // Optional, only if plugin is installed
       "@typescript-eslint/no-explicit-any": "off",
       "react/no-unescaped-entities": "off",
     },

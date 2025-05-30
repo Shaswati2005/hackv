@@ -1,6 +1,6 @@
 "use client"; // Only if using App Router
 
-import { setAuthCookie } from "@/utils/auth";
+import { setAuthCookie } from "../../utils/auth";
 import axios from "axios";
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";

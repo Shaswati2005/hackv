@@ -5,12 +5,12 @@ import { useDropzone } from "react-dropzone";
 import { toast, Toaster } from "react-hot-toast";
 import { Sparkles, FileText, Search } from "lucide-react";
 import { Document, Page, pdfjs } from "react-pdf";
-import { SelectableTextArea } from "@/components/SelectableTextArea";
+import { SelectableTextArea } from "../../components/SelectableTextArea";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import Tesseract from "tesseract.js";
 import axios from "axios";
-import { getAuthCookie } from "@/utils/auth";
+import { getAuthCookie } from "../../utils/auth";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
