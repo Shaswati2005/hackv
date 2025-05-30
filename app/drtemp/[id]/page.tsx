@@ -121,6 +121,15 @@ export default function TemplateEditor() {
     URL.revokeObjectURL(url);
   };
 
+  useEffect(() => {
+    const originalConsoleError = console.error;
+    console.error = () => {};
+
+    return () => {
+      console.error = originalConsoleError; // restore on unmount
+    };
+  }, []);
+
   return (
     <main className="min-h-screen p-10 bg-gradient-to-b from-white to-[#e0e8ff] font-serif">
       <h1 className="text-4xl font-bold mb-10 text-[#2c3a99] capitalize tracking-wide text-center">
