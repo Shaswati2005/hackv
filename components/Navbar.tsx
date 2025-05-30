@@ -1,14 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { getAuthCookie } from "../utils/auth";
+import { userAgent } from "next/server";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState("Home");
-
+  const [activeItem, setActiveItem] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
   const menuItems = ["Home", "Support", "Contact"];
+  useEffect(() => {
+    const userId = getAuthCookie();
+
+    if (!userId) {
+      setLoggedIn(false);
+      console.log("User not logged in");
+    } else {
+      setLoggedIn(true);
+    }
+  }, []);
 
   return (
     <nav className="bg-white border-b border-gray-200 px-4 md:px-8 lg:px-16 py-4 shadow-sm relative">
@@ -25,7 +37,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-8 text-sm font-medium">
+        <div className="hidden md:flex space-x-8 text-sm px-8 font-medium">
           {menuItems.map((item) => (
             <Link
               key={item}
@@ -53,6 +65,38 @@ const Navbar = () => {
               {item}
             </Link>
           ))}
+          {loggedIn ? (
+            <Link
+              href={"/dashboard"}
+              className={`
+                relative pb-1 
+                text-gray-600
+                hover:text-indigo-600
+                transition-colors duration-300
+                ${
+                  activeItem === "Dashboard"
+                    ? "w-full"
+                    : "w-0 group-hover:w-full"
+                }
+              `}
+              onClick={() => setActiveItem("Dashboard")}
+            >
+              Dashboard
+              <span
+                className={`
+                  absolute bottom-0 left-0 h-0.5 bg-indigo-600
+                  transition-all duration-300
+                  ${
+                    activeItem === "Dashboard"
+                      ? "w-full"
+                      : "w-0 group-hover:w-full"
+                  }
+                `}
+              />
+            </Link>
+          ) : (
+            <></>
+          )}
         </div>
 
         {/* Mobile Toggle */}
