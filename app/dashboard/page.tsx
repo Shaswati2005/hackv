@@ -140,25 +140,32 @@ export default function DashboardPage() {
                 Your most recently viewed or modified documents.
               </p>
               <div className="overflow-x-auto">
-                <table className="w-full text-sm text-gray-800">
+                <table className="w-full text-sm text-gray-800 table-fixed">
                   <thead>
                     <tr className="border-b border-gray-200 bg-gray-50 text-left">
-                      <th className="py-3 px-4 font-medium">Name</th>
-                      <th className="py-3 px-4 font-medium">Type</th>
-                      <th className="py-3 px-4 font-medium">Date</th>
+                      <th className="py-3 px-4 font-medium w-1/3">ID</th>
+                      <th className="py-3 px-4 font-medium w-1/3">Overview</th>
+                      <th className="py-3 px-4 font-medium w-1/3">Date</th>
                     </tr>
                   </thead>
                   <tbody>
                     {analyses.map((doc, idx) => (
                       <tr
                         key={idx}
-                        className="border-b last:border-none hover:bg-gray-50 transition"
+                        onClick={() => {
+                          window.location.href = `/explanation/${doc.id}`;
+                        }}
+                        className="border-b last:border-none hover:bg-gray-50 hover:cursor-pointer transition h-16"
                       >
-                        <td className="py-3 px-4">{doc.id}</td>
-                        <td className="py-3 px-4 text-indigo-600 font-medium">
+                        <td className="py-3 px-4 truncate max-w-[200px]">
+                          {doc.id}
+                        </td>
+                        <td className="py-3 px-4 text-indigo-600 font-medium truncate max-w-[200px]">
                           {doc.text}
                         </td>
-                        <td className="py-3 px-4">{doc.createdAt}</td>
+                        <td className="py-3 px-4 truncate max-w-[200px]">
+                          {new Date(doc.createdAt).toLocaleDateString()}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -201,13 +208,23 @@ export default function DashboardPage() {
               <ul className="space-y-3 text-sm">
                 <li className="cursor-pointer text-gray-800 hover:text-indigo-600 transition">
                   📤{" "}
-                  <span className="underline underline-offset-2">
+                  <span
+                    onClick={() => {
+                      window.location.href = "/explanation";
+                    }}
+                    className="underline underline-offset-2"
+                  >
                     Upload New Document
                   </span>
                 </li>
                 <li className="cursor-pointer text-gray-800 hover:text-indigo-600 transition">
                   💡{" "}
-                  <span className="underline underline-offset-2">
+                  <span
+                    onClick={() => {
+                      window.location.href = "/explanation";
+                    }}
+                    className="underline underline-offset-2"
+                  >
                     Get Quick Clause Explanation
                   </span>
                 </li>

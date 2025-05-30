@@ -56,10 +56,6 @@ export default function PDFTextAnalyzer() {
       window.location.href = "/login";
       return;
     }
-    if (!uploadedPDF) {
-      toast.error("Please upload a PDF document first.");
-      return;
-    }
     if (!text.trim()) {
       toast.error("No text extracted from the PDF.");
       return;
@@ -69,12 +65,10 @@ export default function PDFTextAnalyzer() {
     const response = await axios.post("/api/getResults", {
       userId: userId,
       textInput: text,
-      fileName: uploadedPDF.name,
+      fileName: uploadedPDF?.name,
     });
 
     window.location.href = `/explanation/${response.data.id}`;
-
-    
   };
   const onDrop = async (acceptedFiles: File[]) => {
     if (!acceptedFiles.length) {
@@ -203,7 +197,7 @@ export default function PDFTextAnalyzer() {
           </label>
           <SelectableTextArea value={text} onChange={setText} />
           <button
-            onClick={handleAnalyze}
+            onClick={handleAnalyzeDocument}
             className="mt-4 w-full bg-indigo-600 text-white py-3 rounded-xl font-semibold hover:bg-indigo-700 flex items-center justify-center gap-2 transition-all"
           >
             <Search /> Analyze Text

@@ -105,7 +105,10 @@ export const SelectableTextArea: React.FC<SelectableTextAreaProps> = ({
       <textarea
         ref={textareaRef}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => {
+          onChange(e.target.value);
+          console.log(e.target.value);
+        }}
         rows={8}
         placeholder={placeholder || "Paste or type text here..."}
         className="w-full rounded-xl bg-white text-gray-800 placeholder:text-gray-400 p-4 border border-gray-300 shadow focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
