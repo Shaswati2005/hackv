@@ -1,10 +1,9 @@
-// app/api/legal-analysis/[id]/route.ts
-
-import { prisma } from "@/lib/prisma"; // adjust path to your Prisma client
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
-  const id = params.id;
+export async function GET(req: NextRequest, context: { params: { id: string } }) {
+  const id = context.params.id;
 
   try {
     const analysis = await prisma.legalAnalysis.findUnique({
