@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import {
   AlertTriangle,
   CheckCircle,
@@ -11,7 +10,7 @@ import {
   X,
 } from "lucide-react";
 import { useState, useEffect } from "react";
-import Navbar from "@/components/Navbar";
+import Navbar from "../../../components/Navbar";
 import { useParams } from "next/navigation";
 
 type LegalAnalysis = {
