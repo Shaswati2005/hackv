@@ -3,7 +3,7 @@
 import React from "react";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+
 
 const SignupPage = () => {
   const [email, setEmail] = React.useState("");
