@@ -109,7 +109,7 @@ export default function TemplateEditor() {
 
   const handleDownload = async () => {
     const { default: TemplatePdfModule } = await import(
-      "@/components/TemplatePdf"
+      "../../../components/TemplatePdf"
     );
     const blob = await pdf(<TemplatePdfModule content={content} />).toBlob();
     const url = URL.createObjectURL(blob);

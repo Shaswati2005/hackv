@@ -1,5 +1,7 @@
 "use client";
 
+import dynamic from "next/dynamic";
+
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast, Toaster } from "react-hot-toast";
