@@ -55,7 +55,7 @@ const SignupPage = () => {
         // Assuming response.data.token contains the session token
         localStorage.setItem("token", response.data.token); // Store token
         // Redirect or update UI after signup/login
-        window.location.href = "/dashboard"; // example protected page
+        // example protected page
       }
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Signup failed");
