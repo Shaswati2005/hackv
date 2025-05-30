@@ -4,7 +4,7 @@ export async function POST(req: NextRequest) {
   const response = NextResponse.redirect(new URL("/login", req.url));
 
   // Get the cookie store
-  const cookieStore = req.cookies;
+  
 
   // Delete the access_token cookie by setting it to empty with maxAge 0
   response.cookies.set({

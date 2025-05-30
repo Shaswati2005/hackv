@@ -7,7 +7,7 @@ import {
   SchemaType
 } from '@google/generative-ai';
 import { prisma } from '@/lib/prisma'; // Adjust path as needed
-import { getAuthCookie } from '@/utils/auth';
+
 
 
 // Define the expected output structure (useful for type checking and prompting)
@@ -231,7 +231,7 @@ await prisma.legalAnalysis.create({
 return NextResponse.json(parsedOutput, { status: 200 });
 
 
-    return NextResponse.json(parsedOutput, { status: 200 });
+    
 
   } catch (error: any) {
     console.error('Error in API route:', error);

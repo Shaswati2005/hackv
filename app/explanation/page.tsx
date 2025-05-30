@@ -1,7 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
-
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast, Toaster } from "react-hot-toast";
@@ -20,7 +18,7 @@ export default function PDFTextAnalyzer() {
   const [text, setText] = useState("");
   const [uploadedPDF, setUploadedPDF] = useState<File | null>(null);
   const [numPages, setNumPages] = useState<number | null>(null);
-  const [showPDF, setShowPDF] = useState<Boolean>(true);
+  const [showPDF, setShowPDF] = useState<boolean>(true);
 
   const extractTextFromPDF = async (file: File) => {
     const arrayBuffer = await file.arrayBuffer();
@@ -104,17 +102,6 @@ export default function PDFTextAnalyzer() {
     multiple: false,
     accept: { "application/pdf": [".pdf"] },
   });
-
-  const handleAnalyze = () => {
-    if (!text.trim()) {
-      toast.error("Please paste some text to analyze.");
-      return;
-    }
-    toast.success("Analyzing text...");
-    setTimeout(() => {
-      toast.success("Analysis complete!");
-    }, 1000);
-  };
 
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-10 font-sans">

@@ -18,28 +18,8 @@ export default function DashboardPage() {
   };
 
   const [analyses, setAnalyses] = useState<Analysis[]>([]);
-  const router = useRouter();
-  const [username, setUsername] = useState("User");
 
-  const recentDocuments = [
-    {
-      name: "Employment Contract Draft v3",
-      type: "Contract",
-      date: "2025-05-26",
-    },
-    {
-      name: "Partnership Agreement – Key Terms",
-      type: "Agreement",
-      date: "2025-05-25",
-    },
-    { name: "Will of John Doe Analysis", type: "Will", date: "2025-05-24" },
-    { name: "Property Deed Explanation", type: "Deed", date: "2025-05-23" },
-    {
-      name: "NDA Template Customization",
-      type: "Template",
-      date: "2025-05-22",
-    },
-  ];
+  const [username, setUsername] = useState("User");
 
   const createdTemplates = [
     {

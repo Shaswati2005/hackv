@@ -6,8 +6,6 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 const SignupPage = () => {
-  const router = useRouter();
-
   const [email, setEmail] = React.useState("");
   const [name, setName] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -31,6 +29,7 @@ const SignupPage = () => {
   }, [confirmPassword, password]);
 
   const handleSubmit = async () => {
+    setLoading(true);
     if (!termsAccepted) {
       toast.error("You must accept the terms and conditions.");
       return; // Don't proceed
@@ -60,6 +59,7 @@ const SignupPage = () => {
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Signup failed");
     }
+    setLoading(false);
   };
 
   return (
