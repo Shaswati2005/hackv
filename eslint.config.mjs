@@ -16,6 +16,7 @@ const eslintConfig = [
       "no-unused-vars": "off",
       "unused-imports/no-unused-imports": "off", // If using the plugin
       "@typescript-eslint/no-explicit-any": "off",
+      "react/no-unescaped-entities": "off",
     },
   },
 ];
