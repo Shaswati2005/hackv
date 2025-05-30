@@ -9,6 +9,8 @@ import { SelectableTextArea } from "@/components/SelectableTextArea";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import Tesseract from "tesseract.js";
+import axios from "axios";
+import { getAuthCookie } from "@/utils/auth";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
@@ -48,8 +50,31 @@ export default function PDFTextAnalyzer() {
 
     return extractedText.trim();
   };
-  const handleAnalyzeDocument = () => {
-    toast("Analyze Legal Document button clicked — implement your logic here.");
+  const handleAnalyzeDocument = async () => {
+    const userId = getAuthCookie();
+    if (!userId) {
+      window.location.href = "/login";
+      return;
+    }
+    if (!uploadedPDF) {
+      toast.error("Please upload a PDF document first.");
+      return;
+    }
+    if (!text.trim()) {
+      toast.error("No text extracted from the PDF.");
+      return;
+    }
+    toast.success("Analyzing document...");
+
+    const response = await axios.post("/api/getResults", {
+      userId: userId,
+      textInput: text,
+      fileName: uploadedPDF.name,
+    });
+
+    window.location.href = `/explanation/${response.data.id}`;
+
+    
   };
   const onDrop = async (acceptedFiles: File[]) => {
     if (!acceptedFiles.length) {

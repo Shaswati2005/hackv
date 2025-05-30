@@ -12,6 +12,22 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
+import { useParams } from "next/navigation";
+
+type LegalAnalysis = {
+  id: string;
+  text: string;
+  totalClauses: number;
+  dangerousClause: number;
+  generatedSuggestionsNumber: number;
+  proofreadingScore: number;
+  riskSummary: string;
+  documentSummary: string[];
+  dangerousClauses: string[];
+  suggestions: string[];
+  proofreadingFixes: string[];
+  createdAt: string;
+};
 
 export default function LegalFlowDashboard() {
   // Modal state for showing detailed insight
@@ -19,6 +35,9 @@ export default function LegalFlowDashboard() {
     title: string;
     content: string;
   } | null>(null);
+
+  const { document } = useParams(); // Get ID from URL
+  const [data, setData] = useState<LegalAnalysis | null>(null);
 
   // Close modal on Escape key
   useEffect(() => {
@@ -35,11 +54,31 @@ export default function LegalFlowDashboard() {
   function closeModal() {
     setModalData(null);
   }
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch(`/api/legal-analysis/${document}`);
+      if (res.ok) {
+        const json = await res.json();
+        console.log("Fetched analysis:", json);
+        setData(json);
+      } else {
+        console.error("Failed to fetch analysis");
+      }
+    }
+
+    fetchData();
+  }, [document]);
+  if (!data) {
+    return (
+      <div className="p-10 text-center text-blue-600">Loading analysis...</div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white text-gray-800 relative overflow-x-hidden">
       {/* Navbar */}
       <Navbar />
+
       {/* Gradient SVG Backgrounds */}
       <svg
         className="absolute -top-20 -left-20 w-96 h-96 opacity-20 pointer-events-none"
@@ -100,26 +139,26 @@ export default function LegalFlowDashboard() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatCard
             title="Total Clauses Analyzed"
-            value="452"
+            value={data.totalClauses.toString()}
             icon={<BarChart2 className="w-6 h-6 text-blue-600" />}
           />
           <StatCard
             title="Dangerous Clauses"
-            value="14"
+            value={data.dangerousClause.toString()}
             percentage="+8% compared to last doc"
             positive
             icon={<AlertTriangle className="w-6 h-6 text-red-500" />}
           />
           <StatCard
             title="Suggestions Generated"
-            value="39"
+            value={data.generatedSuggestionsNumber.toString()}
             percentage="+5%"
             positive
             icon={<Lightbulb className="w-6 h-6 text-yellow-500" />}
           />
           <StatCard
             title="Proofreading Score"
-            value="92%"
+            value={`${data.proofreadingScore}%`}
             percentage="+4%"
             positive
             icon={<CheckCircle className="w-6 h-6 text-green-600" />}
@@ -132,9 +171,8 @@ export default function LegalFlowDashboard() {
             title="Identified Risks & Loophole Detection"
             icon={<Info className="w-5 h-5 text-blue-600" />}
           />
-          <p className="mt-3 text-blue-700 text-sm leading-relaxed">
-            Clause 5.2 lacks clear definition of data anonymization standards,
-            potentially violating GDPR Article 4(5).
+          <p className="mt-3 text-blue-700 text-sm leading-relaxed whitespace-pre-line">
+            {data.riskSummary}
           </p>
         </section>
 
@@ -144,26 +182,22 @@ export default function LegalFlowDashboard() {
             {
               title: "Document Summary",
               icon: <FileText className="text-blue-600 w-6 h-6" />,
-              content:
-                "This agreement outlines IP ownership, revision cycles, delivery terms, and liability. Termination clause grants 15-day notice by either party.",
+              content: data.documentSummary.join("\n\n"),
             },
             {
               title: "Dangerous Clauses",
               icon: <AlertTriangle className="text-red-600 w-6 h-6" />,
-              content:
-                "Clause 4.6 unfairly assigns sole liability. Clause 8.3 allows termination without compensation. Clause 2.1 lacks definition of timeline extensions.Clause 4.6 unfairly assigns sole liability. Clause 8.3 allows termination without compensation. Clause 2.1 lacks definition of timeline extensions.Clause 4.6 unfairly assigns sole liability. Clause 8.3 allows termination without compensation. Clause 2.1 lacks definition of timeline extensions.",
+              content: data.dangerousClauses.join("\n\n"),
             },
             {
               title: "Suggestions",
               icon: <Lightbulb className="text-yellow-500 w-6 h-6" />,
-              content:
-                "Add scope of revisions. Include indemnity cap. Clarify post-delivery obligations. Standardize timelines across milestones.",
+              content: data.suggestions.join("\n\n"),
             },
             {
               title: "Proofreading Fixes",
               icon: <CheckCircle className="text-green-700 w-6 h-6" />,
-              content:
-                "Fixed spelling in 3.2. Improved clarity in 5.5. Made legal terminology consistent throughout document.",
+              content: data.proofreadingFixes.join("\n\n"),
             },
           ].map(({ title, icon, content }) => (
             <InsightCard

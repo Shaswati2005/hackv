@@ -4,8 +4,23 @@ import Navbar from "@/components/Navbar";
 import FeatureCard from "@/components/FeatureCard";
 import FAQItem from "@/components/FAQItem";
 import { faqs } from "@/data/faqs";
+import { useEffect, useState } from "react";
+import { getCurrentUsername } from "@/lib/supabaseHelpers";
+import { supabase } from "@/lib/supabaseClient"; // ensure this exists
+import { useRouter } from "next/navigation"; // for programmatic navigation
+import { getAuthCookie } from "@/utils/auth";
 
 export default function DashboardPage() {
+  type Analysis = {
+    id: string;
+    text: string;
+    createdAt: string;
+  };
+
+  const [analyses, setAnalyses] = useState<Analysis[]>([]);
+  const router = useRouter();
+  const [username, setUsername] = useState("User");
+
   const recentDocuments = [
     {
       name: "Employment Contract Draft v3",
@@ -44,13 +59,42 @@ export default function DashboardPage() {
     },
   ];
 
+  useEffect(() => {
+    async function fetchUsername() {
+      const name = await getCurrentUsername();
+      setUsername(name || "User");
+    }
+
+    fetchUsername();
+  }, []);
+
+  useEffect(() => {
+    async function fetchUserAnalyses() {
+      const userId = getAuthCookie();
+
+      const { data, error } = await supabase
+        .from("LegalAnalysis")
+        .select("id,text,createdAt")
+        .eq("userId", userId)
+        .order("createdAt", { ascending: false });
+
+      if (error) console.error("Error fetching analyses:", error.message);
+
+      if (!error && data) {
+        setAnalyses(data); // Or setAnalyses(prev => [...prev, ...data]) if appending
+      }
+    }
+
+    fetchUserAnalyses(); // ✅ only call this here
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-[#f3f4f6] text-gray-900">
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-6 py-10">
         <h1 className="text-4xl font-bold mb-8 tracking-tight">
-          Welcome back, John Doe!
+          Welcome back, {username}!
         </h1>
 
         {/* Feature Cards */}
@@ -105,16 +149,16 @@ export default function DashboardPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {recentDocuments.map((doc, idx) => (
+                    {analyses.map((doc, idx) => (
                       <tr
                         key={idx}
                         className="border-b last:border-none hover:bg-gray-50 transition"
                       >
-                        <td className="py-3 px-4">{doc.name}</td>
+                        <td className="py-3 px-4">{doc.id}</td>
                         <td className="py-3 px-4 text-indigo-600 font-medium">
-                          {doc.type}
+                          {doc.text}
                         </td>
-                        <td className="py-3 px-4">{doc.date}</td>
+                        <td className="py-3 px-4">{doc.createdAt}</td>
                       </tr>
                     ))}
                   </tbody>

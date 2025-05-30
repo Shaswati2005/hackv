@@ -1,17 +1,59 @@
 "use client"; // Only if using App Router
 
+import { setAuthCookie } from "@/utils/auth";
+import axios from "axios";
 import React, { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 const LoginPage = () => {
   const [forgotMessage, setForgotMessage] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleForgotPassword = () => {
     // Simulated behavior: show confirmation message
     setForgotMessage("A reset link has been sent to your email.");
+    toast.success("A reset link has been sent to your email.");
+  };
+
+  const handleLogin = async () => {
+    // Basic client-side validation
+    if (!email) {
+      toast.error("Please enter your email.");
+      return;
+    }
+    if (!password) {
+      toast.error("Please enter your password.");
+      return;
+    }
+
+    try {
+      const response = await axios.post("/api/login/", {
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        toast.success("Logged in successfully!");
+        const { id } = response.data;
+        setAuthCookie(id); // Set auth cookie with user ID
+        window.location.href = "/dashboard"; // Redirect to dashboard or protected page
+      } else {
+        toast.error("Login failed: Invalid response.");
+      }
+    } catch (error: any) {
+      // Handle error messages returned by your backend API
+      if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error("Login failed: Please check your credentials.");
+      }
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
+      <Toaster />
       <div className="flex flex-col md:flex-row w-full max-w-5xl shadow-md border rounded-xl overflow-hidden">
         {/* Left-side Image */}
         <div className="hidden md:block md:w-1/2">
@@ -42,7 +84,8 @@ const LoginPage = () => {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="mt-1 w-full px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mt-1 w-full px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 text-gray-600 focus:ring-indigo-500"
                 />
               </div>
 
@@ -54,7 +97,8 @@ const LoginPage = () => {
                 <input
                   type="password"
                   placeholder="Enter password"
-                  className="mt-1 w-full px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="mt-1 w-full px-4 py-2 border rounded-lg text-gray-600 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -79,6 +123,10 @@ const LoginPage = () => {
               {/* Login Button */}
               <button
                 type="submit"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLogin();
+                }}
                 className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg transition duration-200"
               >
                 Login

@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model LegalAnalysis {
+  id                         String   @id @default(uuid())
+  userId                     String // Just a plain string now
+  text                       String
+  totalClauses               Int
+  dangerousClause            Int
+  generatedSuggestionsNumber Int
+  proofreadingScore          Int
+  riskSummary                String
+  documentSummary            String[]
+  dangerousClauses           String[]
+  suggestions                String[]
+  proofreadingFixes          String[]
+  createdAt                  DateTime @default(now())
+}

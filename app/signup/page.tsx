@@ -1,8 +1,67 @@
 "use client"; // Only if using App Router
 
 import React from "react";
+import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const SignupPage = () => {
+  const router = useRouter();
+
+  const [email, setEmail] = React.useState("");
+  const [name, setName] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [termsAccepted, setTermsAccepted] = React.useState(false);
+  const [alertMessage, setAlertMessage] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+
+  const handleConfirmPasswordChange = () => {
+    if (password !== confirmPassword) {
+      setAlertMessage("Passwords do not match.");
+    } else {
+      setAlertMessage("");
+    }
+  };
+
+  React.useEffect(() => {
+    if (confirmPassword) {
+      handleConfirmPasswordChange();
+    }
+  }, [confirmPassword, password]);
+
+  const handleSubmit = async () => {
+    if (!termsAccepted) {
+      toast.error("You must accept the terms and conditions.");
+      return; // Don't proceed
+    }
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match.");
+      return;
+    }
+
+    try {
+      const response = await axios.post("/api/signup/", {
+        username: name,
+        email: email,
+        password: password,
+      });
+
+      if (response.status === 201) {
+        toast.success("Account created successfully!");
+        setTimeout(() => {
+          toast("Check your email for verification");
+        }, 1000); // Optional delay for user feedback
+        // Assuming response.data.token contains the session token
+        localStorage.setItem("token", response.data.token); // Store token
+        // Redirect or update UI after signup/login
+        window.location.href = "/dashboard"; // example protected page
+      }
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Signup failed");
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="flex flex-col md:flex-row w-full max-w-5xl shadow-md border rounded-xl overflow-hidden">
@@ -25,7 +84,13 @@ const SignupPage = () => {
               <p className="text-sm text-gray-500">Create your account</p>
             </div>
 
-            <form className="w-full space-y-4">
+            <form
+              className="w-full space-y-4 "
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmit();
+              }}
+            >
               {/* Email */}
               <div>
                 <label className="block text-sm font-medium text-gray-700">
@@ -34,19 +99,25 @@ const SignupPage = () => {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="mt-1 w-full px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="mt-1 w-full px-4 py-2 border rounded-lg text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
-              {/* Phone */}
+              {/* Name */}
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Phone Number
+                  Name
                 </label>
                 <input
-                  type="tel"
-                  placeholder="Enter your phone number"
-                  className="mt-1 w-full px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  type="text"
+                  placeholder="Enter your Full Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  className="mt-1 w-full px-4 py-2 border text-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -57,8 +128,11 @@ const SignupPage = () => {
                 </label>
                 <input
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter password"
-                  className="mt-1 w-full px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  required
+                  className="mt-1 w-full px-4 py-2 border rounded-lg text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -69,9 +143,15 @@ const SignupPage = () => {
                 </label>
                 <input
                   type="password"
+                  value={confirmPassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                  }}
                   placeholder="Confirm password"
-                  className="mt-1 w-full px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  required
+                  className="mt-1 w-full px-4 py-2 text-gray-700 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
+                <span className="text-red-500">{alertMessage}</span>
               </div>
 
               {/* Terms */}
@@ -79,6 +159,10 @@ const SignupPage = () => {
                 <input
                   type="checkbox"
                   id="terms"
+                  checked={termsAccepted}
+                  onChange={(e) => {
+                    setTermsAccepted(e.target.checked);
+                  }}
                   className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
                 />
                 <label htmlFor="terms" className="ml-2 text-gray-600">
@@ -92,9 +176,12 @@ const SignupPage = () => {
               {/* Sign Up Button */}
               <button
                 type="submit"
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg transition duration-200"
+                disabled={loading}
+                className={`w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg transition duration-200 ${
+                  loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
-                Sign Up
+                {loading ? "Signing up..." : "Sign Up"}
               </button>
 
               {/* Divider */}
@@ -128,6 +215,7 @@ const SignupPage = () => {
           </div>
         </div>
       </div>
+      <Toaster position="top-right" />
     </div>
   );
 };
