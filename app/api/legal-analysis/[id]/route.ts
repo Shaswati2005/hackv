@@ -2,8 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export async function GET( params: { id: string } ) {
-  const id = params.id;
+export async function GET(req: NextRequest, context: { params: { id: string } }) {
+  const id = context.params.id;
 
   try {
     const analysis = await prisma.legalAnalysis.findUnique({
